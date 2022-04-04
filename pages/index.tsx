@@ -11,10 +11,16 @@ const Home: NextPage = () => {
 
       <nav>
         <div className='hidden md:block'>
-          <div className='flex flex-row w-screen fixed p-4 shadow-lg items-center space-x-6 text-center'>
-            <a href='/' className='flex flex-row space-x-3 items-center'>
+          <div className='flex flex-row w-screen fixed p-4 shadow-lg items-center space-x-6 text-center text-gray-500'>
+            <a href='/' className='flex flex-row space-x-3 items-center mr-3'>
               <Image src='/icon.png' width={36} height={36} /> <h1 className='font-bold text-md text-red-500'>Liveed</h1>
             </a>
+
+            <a href='/' className='text-red-500'>Home</a>
+            <a href='/trending' className='font-light'>Trending</a>
+            <a href='/for-you' className='font-light'>For you</a>
+
+            <input type="text" placeholder='Search...' className='p-2 ring-2 ring-gray-200 rounded-xl hover:ring-4' />
           </div>
         </div>
         <div className='md:hidden'>
