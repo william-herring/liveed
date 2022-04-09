@@ -41,7 +41,7 @@ const Home: NextPage<{feeds: Feed[]}> = (props) => {
       <div className='flex flex-col items-center mt-24 space-y-4'>
         {props.feeds.map((obj) => {
           console.log(obj)
-          return <FeedCard title={obj.title} author='Jonathan Placeholder' live={obj.live} />
+          return <FeedCard title={obj.title} author='Daniel Placeholder' live={obj.live} />
         })}
       </div>
     </div>
