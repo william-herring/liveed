@@ -8,7 +8,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = (props) => {
     return (
-        <nav className="fixed top-0">
+        <nav className="fixed top-0 bg-white">
           <div className='hidden md:block'>
             <div className='flex flex-row w-screen p-4 shadow-lg items-center space-x-6 text-center text-gray-500'>
               <a href='/' className='flex flex-row space-x-3 items-center mr-3'>
