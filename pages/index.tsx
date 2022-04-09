@@ -1,8 +1,31 @@
-import type { NextPage } from 'next'
+import type { GetStaticProps, NextPage } from 'next'
+import React from 'react';
+import prisma from '../lib/prisma';
 import Head from 'next/head'
 import Header from '../components/Header'
+import { Feed } from '@prisma/client';
+import FeedCard from '../components/FeedCard';
 
-const Home: NextPage = () => {
+export const getStaticProps: GetStaticProps = async () => {
+  const feeds = await prisma.feed.findMany({
+    where: { live: true },
+  });
+
+  feeds.map(x => {
+    // Ignore any errors picked up by linter, this isn't optimal but it is the only working date serialization solution for now.
+
+    // @ts-ignore
+    x.createdAt = Math.floor(x.createdAt / 1000); // I have no idea...
+    // @ts-ignore
+    x.updatedAt = Math.floor(x.updatedAt / 1000);
+
+    return x;
+  })
+
+  return { props: { feeds } };
+};
+
+const Home: NextPage<{feeds: Feed[]}> = (props) => {
   return (
     <div>
       <Head>
@@ -14,6 +37,13 @@ const Home: NextPage = () => {
         { title: 'Trending', url: '/trending', active: false },
         { title: 'For you', url: '/for-you', active: false }
       ]} />
+
+      <div className='flex flex-col items-center mt-24 space-y-4'>
+        {props.feeds.map((obj) => {
+          console.log(obj)
+          return <FeedCard title={obj.title} author='Jonathan Placeholder' live={obj.live} />
+        })}
+      </div>
     </div>
   )
 }
