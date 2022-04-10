@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
   return { props: { feeds } };
 }
 
-const Home: NextPage<{feeds: Feed[]}> = (props) => {
+const Home: NextPage<{ feeds: Feed[] }> = (props) => {
   return (
     <div>
       <Head>

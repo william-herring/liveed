@@ -3,8 +3,19 @@ import Head from 'next/head'
 import prisma from "../../lib/prisma"
 import { GetServerSideProps } from "next"
 import Router from "next/router"
-import { Feed } from "@prisma/client"
 import Header from "../../components/Header"
+
+interface FeedProps {
+    feed: {
+        id: string
+        createdAt: number // Date is converted to Unix timestamp
+        title: string
+        live: boolean
+        authorId: number
+        author: { username: string }
+        posts: { title: string }
+    }
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const feed = await prisma.feed.findUnique({
@@ -15,8 +26,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             author: {
               select: { username: true },
             },
+            posts: {
+                select: { title: true },
+            }
           },
     })
+
+    console.log(feed)
 
     // @ts-ignore
     feed.createdAt = Math.floor(feed.createdAt / 1000)
@@ -24,7 +40,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return { props: { feed } }
 }
 
-const Feed: NextPage<{feed: Feed}> = (props) => {
+const Feed: NextPage<FeedProps> = (props) => {
     return (
         <div>
             <Head>
@@ -40,7 +56,7 @@ const Feed: NextPage<{feed: Feed}> = (props) => {
             <div className='flex flex-col mt-24 p-6'>
                 <div className='flex items-center mb-3'>
                     <img src="https://randomuser.me/api/portraits/men/44.jpg" className='rounded-full' width={32} />
-                    <p className='text-sm text-gray-500 ml-2'>Daniel Placeholder</p>
+                    <p className='text-sm text-gray-500 ml-2'>{props.feed.author.username}</p>
                 </div>
                 <div className='flex items-center mb-3 border-b-2 pb-6'>
                     <h1 className='font-bold text-4xl'>{props.feed.title}</h1>
