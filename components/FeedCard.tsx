@@ -1,14 +1,15 @@
 import React from "react";
 
-interface FeedProps {
+interface FeedCardProps {
+    id: string
     title: string
     author: string
     live: boolean
 }
 
-const FeedCard: React.FC<FeedProps> = (props) => {
+const FeedCard: React.FC<FeedCardProps> = (props) => {
     return (
-        <a href="/" className='w-2/3'>
+        <a href={'/feed/' + props.id} className='w-2/3'>
             <div className='flex flex-col shadow-md p-6 rounded-lg hover:shadow-lg'>
                 <div className='flex items-center mb-3'>
                     <img src="https://randomuser.me/api/portraits/men/44.jpg" className='rounded-full' width={32} />
