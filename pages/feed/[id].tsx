@@ -4,6 +4,7 @@ import prisma from "../../lib/prisma"
 import { GetServerSideProps } from "next"
 import Router from "next/router"
 import Header from "../../components/Header"
+import Post from "../../components/Post"
 
 interface FeedProps {
     feed: {
@@ -13,7 +14,7 @@ interface FeedProps {
         live: boolean
         authorId: number
         author: { username: string }
-        posts: { title: string }
+        posts: { title: string, content: string }[]
     }
 }
 
@@ -27,12 +28,10 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
               select: { username: true },
             },
             posts: {
-                select: { title: true },
+                select: { title: true, content: true },
             }
           },
     })
-
-    console.log(feed)
 
     // @ts-ignore
     feed.createdAt = Math.floor(feed.createdAt / 1000)
@@ -53,14 +52,25 @@ const Feed: NextPage<FeedProps> = (props) => {
                 { title: 'For you', url: '/for-you', active: false }
             ]} />
 
-            <div className='flex flex-col mt-24 p-6'>
+            <div className='flex flex-col mt-24 p-6 mb-10 border-b-2 pb-6'>
                 <div className='flex items-center mb-3'>
                     <img src="https://randomuser.me/api/portraits/men/44.jpg" className='rounded-full' width={32} />
                     <p className='text-sm text-gray-500 ml-2'>{props.feed.author.username}</p>
                 </div>
-                <div className='flex items-center mb-3 border-b-2 pb-6'>
+                <div className='flex items-center mb-1'>
                     <h1 className='font-bold text-4xl'>{props.feed.title}</h1>
                     {props.feed.live? <p className='bg-red-500 text-white px-2 rounded-r-full rounded-l-full ml-auto'>LIVE</p> : null}
+                </div>
+                <p className='text-gray-500 text-sm'>{props.feed.posts.length} posts</p>
+            </div>
+
+            <div className='flex flex-col items-center'>
+                <div className='w-5/6 md:w-1/2 space-y-6 bg'>
+                    {props.feed.posts.map((obj) => {
+                        return (
+                            <Post title={obj.title} content={obj.content} />
+                        )
+                    })}
                 </div>
             </div>
         </div>
