@@ -5,17 +5,11 @@ import { GetServerSideProps } from "next"
 import Router from "next/router"
 import Header from "../../components/Header"
 import Post from "../../components/Post"
+import { Feed } from "@prisma/client"
 
-interface FeedProps {
-    feed: {
-        id: string
-        createdAt: number // Date is converted to Unix timestamp
-        title: string
-        live: boolean
-        authorId: number
-        author: { username: string }
-        posts: { title: string, content: string }[]
-    }
+interface FeedProps extends Feed {
+    author: { username: string }
+    posts: { title: string, content: string }[]
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
@@ -34,12 +28,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     })
 
     // @ts-ignore
-    feed.createdAt = Math.floor(feed.createdAt / 1000)
+    feed.createdAt = feed.createdAt.toDateString()
 
     return { props: { feed } }
 }
 
-const Feed: NextPage<FeedProps> = (props) => {
+const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
+    // const createdAt = new Date(props.feed.createdAt)
+    
     return (
         <div>
             <Head>
@@ -56,6 +52,7 @@ const Feed: NextPage<FeedProps> = (props) => {
                 <div className='flex items-center mb-3'>
                     <img src="https://randomuser.me/api/portraits/men/44.jpg" className='rounded-full' width={32} />
                     <p className='text-sm text-gray-500 ml-2'>{props.feed.author.username}</p>
+                    <p className='text-gray-500 text-xs ml-auto'>Created on {props.feed.createdAt}</p>
                 </div>
                 <div className='flex items-center mb-1'>
                     <h1 className='font-bold text-4xl'>{props.feed.title}</h1>
@@ -77,4 +74,4 @@ const Feed: NextPage<FeedProps> = (props) => {
     )
 }
 
-export default Feed
+export default FeedPage
