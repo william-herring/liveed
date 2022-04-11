@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
             },
             posts: {
                 select: { title: true, content: true },
-            }
+            },
           },
     })
 
