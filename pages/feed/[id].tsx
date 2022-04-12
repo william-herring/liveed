@@ -33,9 +33,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return { props: { feed } }
 }
 
-const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
-    // const createdAt = new Date(props.feed.createdAt)
-    
+const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {    
     return (
         <div>
             <Head>

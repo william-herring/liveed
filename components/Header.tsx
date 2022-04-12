@@ -1,25 +1,32 @@
 import React from "react";
 import Image from 'next/image'
-import { useState } from "react";
+import { useSession, signIn, signOut } from "next-auth/react"
 
 interface HeaderProps {
     links: { title: string, url: string, active: boolean }[]
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
+    const { data: session } = useSession()
+
     return (
         <nav className="fixed top-0 bg-white">
           <div className='hidden md:block'>
-            <div className='flex flex-row w-screen p-4 shadow-lg items-center space-x-6 text-center text-gray-500'>
+            <div className='flex flex-row w-screen p-4 shadow-lg items-center text-center text-gray-500'>
               <a href='/' className='flex flex-row space-x-3 items-center mr-3'>
                 <Image src='/icon.png' width={36} height={36} /> <h1 className='font-bold text-md text-red-500'>Liveed</h1>
               </a>
 
               {props.links.map((obj) => {
-                  return <a href={obj.url} className={obj.active? 'text-red-500' : 'font-light'}>{obj.title}</a>
+                  return <a href={obj.url} className={obj.active? 'text-red-500 ml-6' : 'font-light ml-6'}>{obj.title}</a>
               })}
 
-              <input type="text" placeholder='Search...' className='p-2 ring-2 ring-gray-200 rounded-xl hover:ring-4' />
+              <input type="text" placeholder='Search...' className='p-2 ml-6 ring-2 ring-gray-200 rounded-xl hover:ring-4' />
+
+              <div className='ml-auto mr-2'>{session? 
+                <h2>{session.user?.email}</h2> : 
+                <button onClick={() => signIn()}>Log in</button>}
+              </div>
             </div>
           </div>
           <div className='md:hidden'>
