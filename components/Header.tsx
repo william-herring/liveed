@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               <input type="text" placeholder='Search...' className='p-2 ml-6 ring-2 ring-gray-200 rounded-xl hover:ring-4' />
 
               <div className='ml-auto mr-2'>{session? 
-                <h2>{session.user?.email}</h2> : 
+                <h2>{session.user?.name}</h2> : 
                 <button onClick={() => signIn()}>Log in</button>}
               </div>
             </div>
