@@ -2,7 +2,6 @@ import { NextPage } from "next"
 import Head from 'next/head'
 import prisma from "../../lib/prisma"
 import { GetServerSideProps } from "next"
-import Router from "next/router"
 import Header from "../../components/Header"
 import Post from "../../components/Post"
 import { Feed } from "@prisma/client"

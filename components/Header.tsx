@@ -1,6 +1,6 @@
 import React from "react";
 import Image from 'next/image'
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 
 interface HeaderProps {
     links: { title: string, url: string, active: boolean }[]
@@ -24,7 +24,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               <input type="text" placeholder='Search...' className='p-2 ml-6 ring-2 ring-gray-200 rounded-xl hover:ring-4' />
 
               <div className='ml-auto mr-2'>{session? 
-                <h2>{session.user?.name}</h2> : 
+                <a href={`/user/${session.user?.name}`}>{session.user?.name}</a> : 
                 <button onClick={() => signIn()}>Log in</button>}
               </div>
             </div>
