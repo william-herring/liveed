@@ -13,7 +13,7 @@ const FeedCard: React.FC<FeedCardProps> = (props) => {
         <a href={'/feed/' + props.id} className='w-2/3'>
             <div className='flex flex-col shadow-md p-6 rounded-lg hover:shadow-lg'>
                 <div className='flex items-center mb-3'>
-                    <img src="https://randomuser.me/api/portraits/men/44.jpg" className='rounded-full' width={32} />
+                    <img src={`https://ui-avatars.com/api/?name=${props.author}&background=00437d&color=fff`} className='rounded-full' width={32} />
                     <p className='text-sm text-gray-500 ml-2'>{props.author}</p>
                     {props.live? <p className='bg-red-500 text-white px-2 rounded-r-full rounded-l-full ml-auto'>LIVE</p> : null}
                 </div>
