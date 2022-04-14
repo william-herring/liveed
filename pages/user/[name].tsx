@@ -1,5 +1,6 @@
 import { GetServerSideProps, NextPage } from "next"
 import { useSession, signOut } from "next-auth/react"
+import { useState } from "react"
 import Head from "next/head"
 import prisma from "../../lib/prisma"
 import { User } from "@prisma/client"
@@ -32,6 +33,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
 const Account: NextPage<{ user: UserPageProps }> = (props) => {
     const { data: session } = useSession()
+    const [ tab, setTab ] = useState(0)
 
     return (
         <div>
@@ -58,10 +60,14 @@ const Account: NextPage<{ user: UserPageProps }> = (props) => {
 
                 {/* TODO: Add functionality */}
                 <div>
-                    <div className='flex border-b-2 space-x-3 text-gray-500'>
-                        <button className='border-2 ml-3 border-b-0 rounded-t-lg p-2 bg-red-500 text-white shadow-3xl'>Feeds</button>
-                        <button className='border-2 border-b-0 rounded-t-lg p-2'>Posts</button>
-                        <button className='border-2 border-b-0 rounded-t-lg p-2'>Watchlist</button>
+                    <div className='flex pl-3 border-b-2 space-x-3 text-gray-500'>
+                        {['Feeds', 'Posts', 'Watchlist'].map((value, i) => {
+                            if (i != tab) {
+                                return <button className='border-2 border-b-0 rounded-t-lg p-2' onClick={() => setTab(i)}>{value}</button>
+                            }
+
+                            return <button className='border-2 border-b-0 rounded-t-lg p-2 bg-gray-200' onClick={() => setTab(i)}>{value}</button>
+                        })}
                     </div>
 
                     {props.user.feeds.map((feed) => {
