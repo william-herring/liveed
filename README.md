@@ -22,7 +22,7 @@ Liveed is a platform for sharing live update feeds. This site is built with:
     - [Prisma](#Prisma)
     - [NextAuth](#NextAuth)
 3. [Contribution](#Contribution)
-    - [How can I help?](#How%20can%20I%20Help?)
+    - [How can I help?](#how-can-i-help)
     - [Setup](#Setup)
 
 # Concept
