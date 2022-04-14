@@ -77,7 +77,7 @@ const Account: NextPage<{ user: UserPageProps }> = (props) => {
                 
                 <div className='flex justify-center fixed bottom-0 w-screen m-6'>
                     {session?.user?.name == props.user.username? 
-                    <button className='mt-24 bg-red-500 p-3 rounded-lg text-white font-bold shadow-lg' onClick={() => signOut()}>Sign out</button> : null}
+                    <button className='bg-red-500 p-3 rounded-lg text-white font-bold shadow-lg' onClick={() => signOut()}>Sign out</button> : null}
                 </div>
             </div>
         </div>
