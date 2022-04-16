@@ -1,9 +1,20 @@
 import React from "react"
 
-const TextEditor: React.FC = () => {
+interface TextEditorProps {
+    onDelete: VoidFunction
+}
+
+const TextEditor: React.FC<TextEditorProps> = (props) => {
     return (
         <div className='bg-white shadow-md p-4 rounded-lg'>
-            <input className='focus:outline-none font-semibold mb-3 w-full' placeholder='Title' type='text' />
+            <div className='flex flex-row'>
+                <input className='focus:outline-none font-semibold mb-3 w-full' placeholder='Title' type='text' />
+                <button onClick={props.onDelete}>
+                    <svg className='ml-auto' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M11.9998 22C7.95337 22.0024 4.30431 19.5659 2.75548 15.8276C1.20665 12.0893 2.06336 7.78606 4.92581 4.92598C7.45311 2.39868 11.1367 1.41166 14.5891 2.33672C18.0414 3.26177 20.738 5.95836 21.6631 9.41072C22.5881 12.8631 21.6011 16.5467 19.0738 19.074C17.2013 20.955 14.654 22.0086 11.9998 22ZM3.99981 12.172C4.04713 16.5732 7.64092 20.1095 12.0424 20.086C16.4438 20.0622 19.9994 16.4875 19.9994 12.086C19.9994 7.68449 16.4438 4.10975 12.0424 4.08598C7.64092 4.06244 4.04713 7.59874 3.99981 12V12.172ZM9.40881 16L7.99981 14.59L10.5898 12L7.99981 9.40998L9.40981 7.99998L11.9998 10.59L14.5898 7.99998L15.9998 9.40998L13.4098 12L15.9998 14.59L14.5908 16L11.9998 13.41L9.40981 16H9.40881Z" fill="#6b7280" />
+                    </svg>
+                </button>
+            </div>
             <div>
                 <div className='flex flex-row space-x-3 p-2 border-2 border-gray-500'>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

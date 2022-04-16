@@ -66,7 +66,7 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
 
             <div className='flex flex-col items-center'>
                 <div className='w-5/6 md:w-1/2 space-y-6 bg'>
-                    {[...Array(editingPosts)].map(() => <TextEditor />)}
+                    {[...Array(editingPosts)].map(() => <TextEditor onDelete={() => setEditingPosts(editingPosts - 1)} />)}
 
                     {props.feed.posts.map((obj) => <Post title={obj.title} content={obj.content} />)}
                 </div>
