@@ -10,13 +10,14 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
 
-    const createPost = () => {
-
+    const createPost = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        console.log('Submitted')
     }
 
     return (
         <div className='bg-white shadow-md p-4 rounded-lg'>
-            <form>
+            <form onSubmit={(e) => createPost(e)}>
                 <div className='flex flex-row'>
                     <input className='focus:outline-none font-semibold mb-3 w-full' placeholder='Title' type='text' />
                     <button onClick={props.onDelete}>
@@ -59,7 +60,7 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
 
 
                 <div className='flex justify-end mt-3'>
-                    <button className='bg-red-500 text-sm text-white font-semibold p-2 rounded-full'>Submit</button>
+                    <button type='submit' className='bg-red-500 text-sm text-white font-semibold p-2 rounded-full hover:bg-opacity-90'>Submit</button>
                 </div>
             </form>
         </div>
