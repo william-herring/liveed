@@ -9,17 +9,41 @@ interface TextEditorProps {
 const TextEditor: React.FC<TextEditorProps> = (props) => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+    const [error, setError] = useState('')
 
-    const createPost = (event: React.FormEvent<HTMLFormElement>) => {
+    const createPost = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        console.log('Submitted')
+
+        if (title == '' || content == '') {
+            setError('Please fill in all fields')
+            return
+        }
+
+        const data = {
+            title: title,
+            content: content,
+            feedId: props.feedId,
+        }
+        
+        const res = await fetch('../api/post', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'}, 
+            body: JSON.stringify(data),
+        })
+
+        if (res.status != 200) {
+            setError('Something went wrong')
+            return
+        }
+
+        window.location.reload()
     }
 
     return (
         <div className='bg-white shadow-md p-4 rounded-lg'>
             <form onSubmit={(e) => createPost(e)}>
                 <div className='flex flex-row'>
-                    <input className='focus:outline-none font-semibold mb-3 w-full' placeholder='Title' type='text' />
+                    <input className='focus:outline-none font-semibold mb-3 w-full' placeholder='Title' type='text' onChange={(e) => setTitle(e.target.value)} />
                     <button onClick={props.onDelete}>
                         <svg className='ml-auto' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M11.9998 22C7.95337 22.0024 4.30431 19.5659 2.75548 15.8276C1.20665 12.0893 2.06336 7.78606 4.92581 4.92598C7.45311 2.39868 11.1367 1.41166 14.5891 2.33672C18.0414 3.26177 20.738 5.95836 21.6631 9.41072C22.5881 12.8631 21.6011 16.5467 19.0738 19.074C17.2013 20.955 14.654 22.0086 11.9998 22ZM3.99981 12.172C4.04713 16.5732 7.64092 20.1095 12.0424 20.086C16.4438 20.0622 19.9994 16.4875 19.9994 12.086C19.9994 7.68449 16.4438 4.10975 12.0424 4.08598C7.64092 4.06244 4.04713 7.59874 3.99981 12V12.172ZM9.40881 16L7.99981 14.59L10.5898 12L7.99981 9.40998L9.40981 7.99998L11.9998 10.59L14.5898 7.99998L15.9998 9.40998L13.4098 12L15.9998 14.59L14.5908 16L11.9998 13.41L9.40981 16H9.40881Z" fill="#6b7280" />
@@ -27,7 +51,7 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
                     </button>
                 </div>
                 <div>
-                    <div className='flex flex-row space-x-3 p-2 border-2 border-gray-500'>
+                    <div className='flex flex-row space-x-3 p-2 border-2 border-gray-500 rounded-t-lg'>
                         <button>
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M6 4H12.5C13.381 4.00004 14.2425 4.25865 14.9779 4.74378C15.7132 5.2289 16.29 5.9192 16.6367 6.72907C16.9834 7.53894 17.0847 8.43276 16.9282 9.29969C16.7716 10.1666 16.3641 10.9685 15.756 11.606C16.4386 12.0013 17.0053 12.5692 17.3992 13.2526C17.7931 13.9361 18.0003 14.7112 18 15.5C18 16.0909 17.8836 16.6761 17.6575 17.2221C17.4313 17.768 17.0998 18.2641 16.682 18.682C16.2641 19.0998 15.768 19.4313 15.2221 19.6575C14.6761 19.8836 14.0909 20 13.5 20H6V18H7V6H6V4ZM9 11H12.5C13.163 11 13.7989 10.7366 14.2678 10.2678C14.7366 9.79893 15 9.16304 15 8.5C15 7.83696 14.7366 7.20107 14.2678 6.73223C13.7989 6.26339 13.163 6 12.5 6H9V11ZM9 13V18H13.5C14.163 18 14.7989 17.7366 15.2678 17.2678C15.7366 16.7989 16 16.163 16 15.5C16 14.837 15.7366 14.2011 15.2678 13.7322C14.7989 13.2634 14.163 13 13.5 13H9Z" fill="#6b7280" />
@@ -55,11 +79,12 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
                         </button>
 
                     </div>
-                    <textarea placeholder='Enter text...' name='Content' rows={5} className='p-3 w-full border-dashed border-gray-500 border-2 border-t-0 resize-none focus:outline-none' />
+                    <textarea placeholder='Enter text...' name='Content' rows={5} className='p-3 w-full border-dashed border-gray-500 border-2 border-t-0 rounded-b-lg resize-none focus:outline-none' onChange={(e) => setContent(e.target.value)} />
                 </div>
 
 
-                <div className='flex justify-end mt-3'>
+                <div className='flex flex-col items-end mt-3'>
+                    {error == ''? null : <p className='text-red-500 text-xs mb-2'>{error}</p>}
                     <button type='submit' className='bg-red-500 text-sm text-white font-semibold p-2 rounded-full hover:bg-opacity-90'>Submit</button>
                 </div>
             </form>

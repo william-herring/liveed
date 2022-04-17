@@ -64,7 +64,7 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                 <p className='text-gray-500 text-sm'>{props.feed.posts.length} posts</p>
             </div>
 
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center mb-6'>
                 <div className='w-5/6 md:w-1/2 space-y-6 bg'>
                     {[...Array(editingPosts)].map(() => <TextEditor feedId={props.feed.id} onDelete={() => setEditingPosts(editingPosts - 1)} />)}
 
