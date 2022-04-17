@@ -10,7 +10,7 @@ interface FeedCardProps {
 
 const FeedCard: React.FC<FeedCardProps> = (props) => {
     return (
-        <a href={'/feed/' + props.id} className='w-2/3'>
+        <a href={`/feed/${props.id}`} className='w-2/3'>
             <div className='flex flex-col shadow-md p-6 rounded-lg hover:shadow-lg'>
                 <div className='flex items-center mb-3'>
                     <img src={`https://ui-avatars.com/api/?name=${props.author}&background=00437d&color=fff`} className='rounded-full' width={32} />
