@@ -45,10 +45,10 @@ const Account: NextPage<{ user: UserPageProps }> = (props) => {
             </Head>
 
             <Header links={[
-                { title: 'Home', url: '/', active: true },
+                { title: 'Home', url: '/', active: false },
                 { title: 'Trending', url: '/trending', active: false },
-                { title: 'For you', url: '/for-you', active: false }
-            ]} />
+                { title: 'Watchlist', url: '/watchlist', active: false }
+            ]} title={props.user.username} />
 
             <div>
                 <div className='flex space-x-6 p-6 items-center pt-24 bg-gray-100'>

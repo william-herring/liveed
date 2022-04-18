@@ -46,15 +46,17 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
             </Head>
 
             <Header links={[
-                { title: 'Home', url: '/', active: true },
+                { title: 'Home', url: '/', active: false },
                 { title: 'Trending', url: '/trending', active: false },
-                { title: 'For you', url: '/for-you', active: false }
-            ]} />
+                { title: 'Watchlist', url: '/watchlist', active: false }
+            ]} title={props.feed.title} />
 
             <div className='flex flex-col mt-24 p-6 mb-10 border-b-2 pb-6'>
-                <div className='flex items-center mb-3'>
-                    <img src={`https://ui-avatars.com/api/?name=${props.feed.author.username}&background=00437d&color=fff`} className='rounded-full' width={32} />
-                    <p className='text-sm text-gray-500 ml-2'>{props.feed.author.username}</p>
+                <div className='flex mb-3'>
+                    <a className='flex items-center' href={`/user/${props.feed.author.username}`}>
+                        <img src={`https://ui-avatars.com/api/?name=${props.feed.author.username}&background=00437d&color=fff`} className='rounded-full' width={32} />
+                        <p className='text-sm text-gray-500 ml-2'>{props.feed.author.username}</p>
+                    </a>
                     <p className='text-gray-500 text-xs ml-auto'>Created on {props.feed.createdAt}</p>
                 </div>
                 <div className='flex items-center mb-1'>

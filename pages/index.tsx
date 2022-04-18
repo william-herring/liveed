@@ -1,5 +1,5 @@
 import type { GetStaticProps, NextPage } from 'next'
-import React from 'react'
+import React, { useState } from 'react'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
 import Header from '../components/Header'
@@ -50,8 +50,8 @@ const Home: NextPage<{ feeds: HomeFeedProps[] }> = (props) => {
       <Header links={[
         { title: 'Home', url: '/', active: true },
         { title: 'Trending', url: '/trending', active: false },
-        { title: 'For you', url: '/for-you', active: false }
-      ]} />
+        { title: 'Watchlist', url: '/watchlist', active: false }
+      ]} title='Home' />
 
       <div className='flex flex-col items-center mt-24 space-y-4'>
         {props.feeds.map((obj) => {
