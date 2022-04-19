@@ -20,6 +20,8 @@ const Header: React.FC<HeaderProps> = (props) => {
                 <path d="M17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41L17.59 5Z" fill="#ef4444" />
               </svg>
             </button>
+
+            {props.links.map((obj) => <a href={obj.url} className={obj.active? 'text-red-500 ml-6 font-bold text-2xl' : 'ml-6 text-2xl'}>{obj.title}</a>)}
           </div> : null}
           <div className='hidden md:block'>
             <div className='flex flex-row w-screen p-4 shadow-lg items-center text-center text-gray-500'>
