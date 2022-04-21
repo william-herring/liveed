@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import Image from 'next/image'
 import { useSession, signIn } from "next-auth/react"
-import { useRouter } from "next/router"
 
 interface HeaderProps {
     links: { title: string, url: string, active: boolean }[],
@@ -14,14 +13,19 @@ const Header: React.FC<HeaderProps> = (props) => {
 
     return (
         <nav className="fixed top-0 bg-white">
-          {showDrawer? <div className='flex flex-col w-screen h-screen bg-white p-4'>
+          {showDrawer? <div className='flex flex-col w-screen h-screen bg-white'>
             <button onClick={() => setShowDrawer(false)} className='ml-auto'>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg className='m-4' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41L17.59 5Z" fill="#ef4444" />
               </svg>
             </button>
-
+              
             {props.links.map((obj) => <a href={obj.url} className={obj.active? 'text-red-500 ml-6 font-bold text-2xl' : 'ml-6 text-2xl'}>{obj.title}</a>)}
+
+            {session? <a href={`/user/${session?.user?.name}`} className='flex p-6 fixed bottom-0 space-x-3 items-center w-full border-t-2'>
+              <img className='rounded-full' src={`https://ui-avatars.com/api/?name=${session?.user?.name}&background=00437d&color=fff`} width={52} />
+              <p className='text-gray-500 text-xl'>{session?.user?.name}</p>
+            </a> : <button className='fixed bottom-0 p-6 text-xl text-gray-500' onClick={() => signIn()}>Log in</button>}
           </div> : null}
           <div className='hidden md:block'>
             <div className='flex flex-row w-screen p-4 shadow-lg items-center text-center text-gray-500'>

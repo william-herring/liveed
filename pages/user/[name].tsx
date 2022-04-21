@@ -72,7 +72,7 @@ const Account: NextPage<{ user: UserPageProps }> = (props) => {
                             return <button className='border-2 border-b-0 rounded-t-lg p-2 bg-gray-200' onClick={() => setTab(i)}>{value}</button>
                         })}
                     </div>
-                        
+
                     <div className='flex flex-col items-center ml-6 space-y-4 mt-4'>
                         {props.user.feeds.map((feed) => <FeedCard id={feed.id} title={feed.title} posts={feed.posts.length} author={props.user.username} live={feed.live} />)}
                     </div>

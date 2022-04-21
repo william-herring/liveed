@@ -22,7 +22,7 @@ const Login: NextPage<{ providers: Record<LiteralUnion<BuiltInProviderType, stri
             <Head>
                 <title>Log in</title>
             </Head>
-            <div className='flex flex-col items-center justify-center h-screen'>
+            <div className='flex flex-col items-center justify-center h-screen text-center'>
                 <h1 className='text-red-500 font-bold text-4xl m-6'>Continue to Liveed</h1>
                 {Object.values(props.providers).map((provider) => {
                     return <div className='flex border-2 flex-row text-red-500 text-xl p-3 rounded-lg'>
