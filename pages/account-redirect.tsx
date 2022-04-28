@@ -1,4 +1,5 @@
-import { useRouter } from "next/router"
+import Router, { useRouter } from "next/router"
+import { useEffect } from "react"
 import { GetServerSideProps, NextPage } from "next"
 import { useSession, getSession } from "next-auth/react"
 import { User } from "@prisma/client"
@@ -38,11 +39,15 @@ const AccountRedirect: NextPage<AccountRedirectProps | null> = (props) => {
     const { data: session } = useSession()
     const { redirectUrl } = useRouter().query
 
-    console.log(props.user)
+
+    // Redirect logic
+    if (session) {
+        Router.push('' + redirectUrl)
+    }
 
     return (
         <div>
-            {!session? <p>Did you mean to go to the <a href='/login' className='text-red-500'>log in page</a>?</p> : <p>Username: {props.user?.username}, email: {props.user?.username}</p>}
+            {!session? <p>Did you mean to go to the <a href='/login' className='text-red-500'>log in page</a>?</p> : <p>Redirect not working? Try <a href={'' + redirectUrl} className='text-red-500'>this link</a>.</p>}
         </div>
     )
 }
