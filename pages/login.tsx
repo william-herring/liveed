@@ -1,6 +1,6 @@
 import { GetServerSideProps, NextPage } from "next"
 import { BuiltInProviderType } from "next-auth/providers"
-import { ClientSafeProvider, getProviders, getSession, LiteralUnion, signIn } from "next-auth/react"
+import { ClientSafeProvider, getProviders, LiteralUnion, signIn } from "next-auth/react"
 import { useRouter } from "next/router"
 import Head from "next/head"
 
@@ -28,7 +28,7 @@ const Login: NextPage<{ providers: Record<LiteralUnion<BuiltInProviderType, stri
                     return <div className='flex border-2 flex-row text-red-500 text-xl p-3 rounded-lg'>
                         {providerSvgMap[provider.id]}
                             <button onClick={() => signIn(provider.id, {
-                                callbackUrl: query.callbackUrl?.toString(),
+                                callbackUrl: `/account-redirect?redirectUrl=${query.callbackUrl?.toString()}`,
                                 })}>Sign in with {provider.name}
                             </button>
                         </div>
