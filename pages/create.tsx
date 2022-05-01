@@ -16,7 +16,7 @@ const CreateFeed: NextPage = () => {
                 { title: 'Home', url: '/', active: true },
                 { title: 'Trending', url: '/trending', active: false },
                 { title: 'Watchlist', url: '/watchlist', active: false }
-            ]} title={title} />
+            ]} title='Create Post' />
 
             <div className='flex flex-col items-center mt-24 p-6'>
                 <input className='focus:outline-none font-semibold mb-3 w-full' placeholder='Title' type='text' onChange={(e) => setTitle(e.target.value)} />
