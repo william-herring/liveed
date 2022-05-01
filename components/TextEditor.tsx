@@ -14,7 +14,7 @@ const TextEditor: React.FC<TextEditorProps> = (props) => {
     const createPost = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
-        if (title == '' || content == '') {
+        if (!title || !content) {
             setError('Please fill in all fields')
             return
         }
