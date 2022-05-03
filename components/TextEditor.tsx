@@ -1,5 +1,4 @@
 import React, { useState } from "react"
-import prisma from "../lib/prisma"
 
 interface TextEditorProps {
     onDelete: VoidFunction
