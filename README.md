@@ -2,8 +2,6 @@
 ![Stars](https://img.shields.io/github/stars/william-herring/liveed)
 ![Issues](https://img.shields.io/github/issues/william-herring/liveed)
 
-<p style="color: red; font-weight: bold">Currently on hold for ~3 months to set aside time for work on Science Talent Search project.</p>
-
 Liveed is a platform for sharing live update feeds. This site is built with:
 - Next.js
 - TypeScript
