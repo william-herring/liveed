@@ -27,7 +27,7 @@ Liveed is a platform for sharing live update feeds. This site is built with:
 
 # Concept
 ## Idea
-Live blog and update feeds are found everywhere, and gaining popularity. Unfortunately, most of these are run by big news sites and developers, who do not offer many mainstream solutions. Liveed aims to address this problem by providing a community-based platform for people to share and follow live update feeds with ease. The idea behind Liveed is to make live update feeds publicly accessible, and to create a single location for access to them.
+Live blog and update feeds are found everywhere, and are gaining popularity. Unfortunately, most of these are run by big news sites and developers, who do not offer many mainstream solutions. Liveed aims to address this problem by providing a community-based platform for people to share and follow live update feeds with ease. The idea behind Liveed is to make live update feeds publicly accessible, and to create a single location for access to them.
 
 Users may ‘subscribe’ to a feed, and receive notifications of posts marked as key events. By default, your subscriptions are public but may be turned off in privacy settings. On the home page, feeds are ranked by their subscriber count. 
 
