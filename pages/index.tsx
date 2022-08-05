@@ -8,7 +8,7 @@ import FeedCard from '../components/FeedCard'
 import { useSession } from 'next-auth/react'
 
 interface HomeFeedProps extends Feed {
-  hearts: number,
+  subscriptions: number,
   author: {
     username: string
   },
@@ -59,7 +59,7 @@ const { data: session } = useSession()
 
       <div className='flex flex-col items-center mt-24 space-y-4'>
         {props.feeds.map((obj) => {
-          return <FeedCard key={obj.id} id={obj.id} title={obj.title} posts={obj.posts.length} hearts={obj.hearts}
+          return <FeedCard key={obj.id} id={obj.id} title={obj.title} posts={obj.posts.length} subscriptions={obj.subscriptions}
           author={obj.author.username} live={obj.live} />
         })}
       </div>
