@@ -8,11 +8,12 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  email     String   @unique
-  username  String   @unique
-  feeds     Feed[]
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  email            String   @unique
+  username         String   @unique
+  feeds            Feed[]
+  subscriptions    Feed[]   @relation("subscriptions")
 }
 
 model Feed {
@@ -20,18 +21,18 @@ model Feed {
   createdAt        DateTime @default(now())
   title            String   @db.VarChar(250)
   live             Boolean  @default(true)
-  subscriptions    Int      @default(0)
   author           User?    @relation(fields: [authorId], references: [id])
   authorId         Int?
   posts            Post[]
+  subscribers      User[]   @relation("subscriptions")
 }
 
 model Post {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  title     String   @db.VarChar(120)
-  content   String   @db.VarChar(500)
-  feed      Feed?    @relation(fields: [feedId], references: [id])
-  feedId    String?
+  id               Int      @id @default(autoincrement())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  title            String   @db.VarChar(120)
+  content          String   @db.VarChar(500)
+  feed             Feed?    @relation(fields: [feedId], references: [id])
+  feedId           String?
 }

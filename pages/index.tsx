@@ -3,12 +3,14 @@ import React, { useState } from 'react'
 import prisma from '../lib/prisma'
 import Head from 'next/head'
 import Header from '../components/Header'
-import { Feed } from '@prisma/client'
+import { Feed, User } from '@prisma/client'
 import FeedCard from '../components/FeedCard'
 import { useSession } from 'next-auth/react'
 
 interface HomeFeedProps extends Feed {
-  subscriptions: number,
+  subscribers: {
+    id: number,
+  }[],
   author: {
     username: string
   },
@@ -23,6 +25,9 @@ export const getStaticProps: GetStaticProps = async () => {
     include: {
       author: { 
         select: { username: true },
+      },
+      subscribers: {
+        select: { id: true },
       },
       posts: {
         select: { id: true },
@@ -43,8 +48,7 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 const Home: NextPage<{ feeds: HomeFeedProps[] }> = (props) => {
-const { data: session } = useSession()
-
+  const { data: session } = useSession()
   return (
     <div>
       <Head>
@@ -59,7 +63,7 @@ const { data: session } = useSession()
 
       <div className='flex flex-col items-center mt-24 space-y-4'>
         {props.feeds.map((obj) => {
-          return <FeedCard key={obj.id} id={obj.id} title={obj.title} posts={obj.posts.length} subscriptions={obj.subscriptions}
+          return <FeedCard key={obj.id} id={obj.id} title={obj.title} posts={obj.posts.length} subscriptions={obj.subscribers.length}
           author={obj.author.username} live={obj.live} />
         })}
       </div>
