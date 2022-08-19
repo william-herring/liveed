@@ -11,7 +11,7 @@ import TextEditor from "../../components/TextEditor"
 
 interface FeedProps extends Feed {
     author: { username: string }
-    subscribers: { id: number }[]
+    subscribers: { id: number, username: string }[]
     posts: { title: string, content: string }[]
 }
 
@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
               select: { username: true },
             },
             subscribers: {
-                select: { id: true },
+                select: { id: true, username: true },
             },
             posts: {
                 select: { title: true, content: true },
@@ -42,12 +42,23 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {    
     const { data: session } = useSession()
     const [editingPosts, setEditingPosts] = useState(0)
+    const [openPopup, setOpenPopup] = useState(false)
 
     return (
         <div>
             <Head>
                 <title>{props.feed.title}</title>
             </Head>
+
+            {openPopup? <button onClick={() => setOpenPopup(false)} className='flex cursor-default flex-col bg-black fixed top-0 bg-opacity-20 z-20 w-screen h-screen justify-center items-center'>
+                <div className='bg-white p-6 rounded-xl shadow-lg'>
+                    <div className='text-red-500 font-light text-right w-full mb-3'>
+                        <button>Close</button>
+                    </div>
+                    <h1 className='font-semibold text-xl'>Subscribers to this feed ({props.feed.subscribers.length})</h1>
+                    {props.feed.subscribers.map((s) => <p>{s.username}</p>)}
+                </div>
+            </button> : null}
 
             <Header links={[
                 { title: 'Home', url: '/', active: false },
@@ -67,7 +78,7 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                     <h1 className='font-bold text-4xl'>{props.feed.title}</h1>
                     {props.feed.live? <p className='bg-red-500 text-white px-2 rounded-r-full rounded-l-full ml-auto'>LIVE</p> : null}
                 </div>
-                <button className='text-gray-500 text-sm mr-auto'>{props.feed.subscribers.length} subscribers</button>
+                <button className='text-gray-500 text-sm mr-auto' onClick={() => setOpenPopup(true)}>{props.feed.subscribers.length} subscribers</button>
                 <p className='text-gray-500 text-sm'>{props.feed.posts.length} posts</p>
             </div>
 
