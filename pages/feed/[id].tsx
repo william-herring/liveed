@@ -11,6 +11,7 @@ import TextEditor from "../../components/TextEditor"
 
 interface FeedProps extends Feed {
     author: { username: string }
+    subscribers: { id: number }[]
     posts: { title: string, content: string }[]
 }
 
@@ -22,6 +23,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         include: {
             author: {
               select: { username: true },
+            },
+            subscribers: {
+                select: { id: true },
             },
             posts: {
                 select: { title: true, content: true },
@@ -63,6 +67,7 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                     <h1 className='font-bold text-4xl'>{props.feed.title}</h1>
                     {props.feed.live? <p className='bg-red-500 text-white px-2 rounded-r-full rounded-l-full ml-auto'>LIVE</p> : null}
                 </div>
+                <button className='text-gray-500 text-sm mr-auto'>{props.feed.subscribers.length} subscribers</button>
                 <p className='text-gray-500 text-sm'>{props.feed.posts.length} posts</p>
             </div>
 
