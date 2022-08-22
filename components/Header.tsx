@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { useRouter } from "next/router"
 import Image from 'next/image'
 import { useSession, signIn } from "next-auth/react"
 
@@ -10,6 +11,13 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (props) => {
     const { data: session } = useSession()
     const [showDrawer, setShowDrawer] = useState(false)
+    const router = useRouter()
+
+    const handleSearchQuery = (e: any) => {
+      if (e.key === 'Enter') {
+        router.push('/search?q=' + e.target.value)
+      }
+    }
 
     return (
         <nav className="fixed bg-white top-0 z-10">
@@ -37,7 +45,7 @@ const Header: React.FC<HeaderProps> = (props) => {
                   return <a href={obj.url} className={obj.active? 'text-red-500 ml-6' : 'font-light ml-6'}>{obj.title}</a>
               })}
 
-              <input type="text" placeholder='Search...' className='p-2 ml-6 ring-2 ring-gray-200 rounded-xl hover:ring-4' />
+              <input type="text" placeholder='Search...' className='p-2 ml-6 ring-2 ring-gray-200 rounded-xl hover:ring-4' onKeyDown={handleSearchQuery} />
 
               <div className='ml-auto mr-2'>{session? 
                 <a href={`/user/${session.user?.name}`}>{session.user?.name}</a> : 

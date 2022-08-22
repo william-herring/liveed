@@ -41,7 +41,7 @@ const CreateFeed: NextPage = () => {
                         <input className='focus:outline-none font-semibold mb-3 w-full text-4xl' placeholder='Title' type='text' onChange={(e) => setTitle(e.target.value)} />
                         <p className='bg-red-500 text-white px-2 rounded-r-full rounded-l-full'>LIVE</p>
                     </div>
-                    <input className='focus:outline-none mb-3 w-full text-lg' placeholder='Enter tags' type='text' onKeyDown={(e) => handleTagEnter(e)} />       
+                    <input className='focus:outline-none mb-3 w-full text-lg' placeholder='Enter tags' type='text' onKeyDown={handleTagEnter} />       
                 </form>
             </div>
         </div>

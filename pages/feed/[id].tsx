@@ -56,7 +56,10 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                         <button>Close</button>
                     </div>
                     <h1 className='font-semibold text-xl'>Subscribers to this feed ({props.feed.subscribers.length})</h1>
-                    {props.feed.subscribers.map((s) => <p>{s.username}</p>)}
+                    {props.feed.subscribers.map((s) => <a className='flex my-4 items-center' href={`/user/${s.username}`}>
+                        <img src={`https://ui-avatars.com/api/?name=${s.username}&background=00437d&color=fff`} className='rounded-full' width={32} />
+                        <p className='text-sm text-gray-500 ml-2'>{s.username}</p>
+                    </a>)}
                 </div>
             </button> : null}
 
