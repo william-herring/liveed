@@ -49,9 +49,9 @@ const SearchPage: NextPage<SearchProps> = (props) => {
 
             <div className='p-6 mt-24'>
                 <h1 className='text-2xl text-gray-500'>{props.feeds.length + props.users.length} results for "{router.query.q}"</h1>
-                <div className='flex flex-col mt-6 font-light text-red-500'>
-                    {props.users.map((u) => <a href={'/user/' + u.username}>User: {u.username}</a>)}
-                    {props.feeds.map((f) => <a href={'/feed/' + f.id}>Feed: {f.title}</a>)}
+                <div className='flex flex-col mt-6 font-light text-gray-500'>
+                    {props.users.map(u => <p key={u.id}>User: <a className='text-red-500' href={'/user/' + u.username}>{u.username}</a></p>)}
+                    {props.feeds.map(f => <p key={f.id}>Feed: <a className='text-red-500' href={'/feed/' + f.id}>{f.title}</a></p>)}
                 </div>
             </div>
         </div>
