@@ -14,10 +14,10 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
     const search = query.q as string
 
     const feeds = await prisma.feed.findMany({
-        where: { title: { contains: search } }
+        where: { title: { contains: search, mode: 'insensitive' } }
     })
     const users = await prisma.user.findMany({
-        where: { username: { contains: search } }
+        where: { username: { contains: search, mode: 'insensitive' } }
     })
 
     feeds.map(feed => 
