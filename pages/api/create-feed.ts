@@ -15,5 +15,5 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
             author: { connect: { email: session?.user?.email } },
         },
     });
-    res.json(result);
+    res.json(result)
 }

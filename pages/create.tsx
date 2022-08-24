@@ -2,12 +2,14 @@ import { NextPage } from "next"
 import { useSession } from "next-auth/react"
 import Head from "next/head"
 import React, { useState } from "react"
+import { useRouter } from "next/router";
 import Header from "../components/Header"
 
 const CreateFeed: NextPage = () => {
     const [title, setTitle] = useState('New feed')
     const [tags, setTags] = useState<string[]>([])
     const { data: session } = useSession()
+    const router = useRouter()
 
     const handleTagEnter = (e: any) => {
         if (e.key === 'Enter') {
@@ -40,6 +42,8 @@ const CreateFeed: NextPage = () => {
             alert('Something went wrong')
             return
         }
+        const obj = await res.json()
+        await router.replace('/feed/' + obj['id'])
     }
 
     return (
