@@ -1,7 +1,7 @@
 import { NextPage } from "next"
 import { useSession } from "next-auth/react"
 import Head from "next/head"
-import { useState } from "react"
+import React, { useState } from "react"
 import Header from "../components/Header"
 
 const CreateFeed: NextPage = () => {
@@ -11,8 +11,34 @@ const CreateFeed: NextPage = () => {
 
     const handleTagEnter = (e: any) => {
         if (e.key === 'Enter') {
+            e.preventDefault()
             setTags([...tags, e.target.value])
             e.target.value = ''
+        }
+    }
+
+    const handleSubmit = async (e: any) => {
+        e.preventDefault()
+
+        if (!title) {
+            alert('Please fill in all fields')
+            return
+        }
+
+        const data = {
+            title: title,
+            tags: tags,
+        }
+
+        const res = await fetch('../api/create-feed', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data),
+        })
+
+        if (res.status != 200) {
+            alert('Something went wrong')
+            return
         }
     }
 
@@ -35,16 +61,17 @@ const CreateFeed: NextPage = () => {
                         <p className='text-sm text-gray-500 ml-2'>{session?.user?.name}</p>
                     </a>
                 </div>
-                <form onSubmit={() => {}}>
+                <form onSubmit={handleSubmit}>
                     <div className='flex items-center mb-1'>
                         <input className='focus:outline-none font-semibold mb-3 w-full text-4xl' placeholder='Title' type='text' onChange={(e) => setTitle(e.target.value)} />
                         <p className='bg-red-500 text-white px-2 rounded-r-full rounded-l-full'>LIVE</p>
                     </div>
                     <input className='focus:outline-none mb-3 w-full text-lg' placeholder='Enter tags' type='text' onKeyDown={handleTagEnter} />
-                    <div className='flex space-x-2'>
-                        {tags.map((t) => <p className='bg-blue-300 text-blue-900 text-sm rounded-full p-1.5 text-center' key={t}>#{t}
+                    <div className='flex flex-wrap space-x-2 mb-6 w-full'>
+                        {tags.map((t) => <p className='bg-blue-300 text-blue-900 text-sm rounded-full p-1.5 text-center mb-1.5' key={t}>#{t}
                         </p>)}
                     </div>
+                        <button type='submit' className='bg-red-500 text-sm text-white font-semibold p-2 rounded-full hover:bg-opacity-90'>Create</button>
                 </form>
             </div>
         </div>
