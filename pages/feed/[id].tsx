@@ -6,7 +6,7 @@ import Header from "../../components/Header"
 import { useSession } from "next-auth/react"
 import Post from "../../components/Post"
 import { Feed } from "@prisma/client"
-import { useState } from "react"
+import React, { useState } from "react"
 import TextEditor from "../../components/TextEditor"
 
 interface FeedProps extends Feed {
@@ -81,6 +81,10 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                     <h1 className='font-bold text-4xl'>{props.feed.title}</h1>
                     {props.feed.live? <p className='bg-red-500 text-white px-2 rounded-r-full rounded-l-full ml-auto'>LIVE</p> : null}
                 </div>
+                <div className='flex flex-wrap space-x-2 my-1.5 w-full'>
+                    {props.feed.tags.map((t) => <p className='bg-blue-300 text-blue-900 text-xs rounded-full p-1.5 text-center mb-1.5' key={t}>#{t}
+                    </p>)}
+                </div>
                 <button className='text-gray-500 text-sm mr-auto' onClick={() => setOpenPopup(true)}>{props.feed.subscribers.length} subscribers</button>
                 <p className='text-gray-500 text-sm'>{props.feed.posts.length} posts</p>
             </div>
@@ -97,8 +101,8 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                 <div className='flex justify-end fixed bottom-0 w-screen p-6'>
                     <button className='bg-red-500 p-3 rounded-full hover:bg-opacity-90' onClick={() => setEditingPosts(editingPosts + 1)}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M19 10H17V7H14V5H17V2H19V5H22V7H19V10Z" fill="#ffff"></path>
-                            <path d="M21 12H19V15H8.334C7.90107 14.9988 7.47964 15.1393 7.134 15.4L5 17V5H12V3H5C3.89543 3 3 3.89543 3 5V21L7.8 17.4C8.14582 17.1396 8.56713 16.9992 9 17H19C20.1046 17 21 16.1046 21 15V12Z" fill="#ffff"></path>
+                            <path d="M19 10H17V7H14V5H17V2H19V5H22V7H19V10Z" fill="#ffff"/>
+                            <path d="M21 12H19V15H8.334C7.90107 14.9988 7.47964 15.1393 7.134 15.4L5 17V5H12V3H5C3.89543 3 3 3.89543 3 5V21L7.8 17.4C8.14582 17.1396 8.56713 16.9992 9 17H19C20.1046 17 21 16.1046 21 15V12Z" fill="#ffff"/>
                         </svg>
                     </button>
                 </div> : null
