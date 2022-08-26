@@ -8,6 +8,7 @@ import Post from "../../components/Post"
 import { Feed } from "@prisma/client"
 import React, { useState } from "react"
 import TextEditor from "../../components/TextEditor"
+import {useRouter} from "next/router";
 
 interface FeedProps extends Feed {
     author: { username: string }
@@ -43,6 +44,15 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
     const { data: session } = useSession()
     const [editingPosts, setEditingPosts] = useState(0)
     const [openPopup, setOpenPopup] = useState(false)
+    const router = useRouter()
+
+    const subscribeToFeed = async () => {
+        const res = await fetch(`../api/feed/subscribe?id=${props.feed.id}`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+        })
+        router.reload()
+    }
 
     return (
         <div>
@@ -85,7 +95,8 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                     {props.feed.tags.map((t) => <p className='bg-blue-300 text-blue-900 text-xs rounded-full p-1.5 text-center mb-1.5' key={t}>#{t}
                     </p>)}
                 </div>
-                <button className='text-gray-500 text-sm mr-auto' onClick={() => setOpenPopup(true)}>{props.feed.subscribers.length} subscribers</button>
+                <p className='text-sm mr-auto space-x-5'><button className='text-gray-500' onClick={() => setOpenPopup(true)}>{props.feed.subscribers.length} subscribers</button>
+                    <button className='text-red-500 font-semibold' onClick={subscribeToFeed}>Subscribe</button></p>
                 <p className='text-gray-500 text-sm'>{props.feed.posts.length} posts</p>
             </div>
 

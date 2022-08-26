@@ -32,7 +32,7 @@ const CreateFeed: NextPage = () => {
             tags: tags,
         }
 
-        const res = await fetch('../api/create-feed', {
+        const res = await fetch('../api/feed/create', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(data),
