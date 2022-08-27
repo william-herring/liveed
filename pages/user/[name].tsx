@@ -12,7 +12,8 @@ interface UserPageProps extends User {
         id: string
         title: string
         live: boolean
-        posts: { id: number }[]
+        posts: { id: number }[],
+        subscribers: { id: number }[],
     }[]
 }
 
@@ -23,7 +24,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         },
         include: {
             feeds: {
-                select: { id: true, title: true, live: true, posts: { select: { id: true } } }
+                select: { id: true, title: true, live: true, posts: { select: { id: true } }, subscribers: {
+                        select: { id: true }
+                    } }
             }
         }
     })
@@ -74,7 +77,7 @@ const Account: NextPage<{ user: UserPageProps }> = (props) => {
                     </div>
 
                     <div className='flex flex-col items-center ml-6 space-y-4 mt-4'>
-                        {props.user.feeds.map((feed) => <FeedCard id={feed.id} title={feed.title} posts={feed.posts.length} author={props.user.username} live={feed.live} />)}
+                        {props.user.feeds.map((feed) => <FeedCard id={feed.id} title={feed.title} posts={feed.posts.length} author={props.user.username} live={feed.live} subscriptions={feed.subscribers.length} />)}
                     </div>
 
                 </div>

@@ -23,7 +23,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const feeds = await prisma.feed.findMany({
     where: { live: true },
     include: {
-      author: { 
+      author: {
         select: { username: true },
       },
       subscribers: {
@@ -36,7 +36,7 @@ export const getStaticProps: GetStaticProps = async () => {
   });
 
   feeds.map(feed => {
-    // Ignore any errors picked up by linter, this isn't optimal but it is the only working date serialization solution for now.
+    // Ignore any errors picked up by linter, this isn't optimal, but it is the only working date serialization solution for now.
 
     // @ts-ignore
     feed.createdAt = feed.createdAt.toDateString()
