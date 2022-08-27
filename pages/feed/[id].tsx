@@ -12,7 +12,7 @@ import {useRouter} from "next/router";
 
 interface FeedProps extends Feed {
     author: { username: string }
-    subscribers: { id: number, username: string }[]
+    subscribers: { username: string }[]
     posts: { title: string, content: string }[]
 }
 
@@ -26,13 +26,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
               select: { username: true },
             },
             subscribers: {
-                select: { id: true, username: true },
+                select: { username: true },
             },
             posts: {
                 select: { title: true, content: true },
             },
           },
     })
+
 
     // @ts-ignore
     feed.createdAt = feed.createdAt.toDateString()
@@ -53,7 +54,6 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
         })
         router.reload()
     }
-
     return (
         <div>
             <Head>
@@ -96,7 +96,7 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                     </p>)}
                 </div>
                 <p className='text-sm mr-auto space-x-5'><button className='text-gray-500' onClick={() => setOpenPopup(true)}>{props.feed.subscribers.length} subscribers</button>
-                    <button className='text-red-500 font-semibold' onClick={subscribeToFeed}>Subscribe</button></p>
+                    {session?.user?.name != undefined && !props.feed.subscribers.some(u => u.username === session?.user?.name)? <button className='text-red-500 font-semibold' onClick={subscribeToFeed}>Subscribe</button> : null} </p>
                 <p className='text-gray-500 text-sm'>{props.feed.posts.length} posts</p>
             </div>
 
@@ -107,8 +107,8 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                     {props.feed.posts.reverse().map((obj) => <Post title={obj.title} content={obj.content} />)}
                 </div>
             </div>
-            
-            {session?.user?.name == props.feed.author.username? 
+
+            {session?.user?.name == props.feed.author.username?
                 <div className='flex justify-end fixed bottom-0 w-screen p-6'>
                     <button className='bg-red-500 p-3 rounded-full hover:bg-opacity-90' onClick={() => setEditingPosts(editingPosts + 1)}>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
