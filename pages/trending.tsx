@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async () => {
 const TrendingPage: NextPage<{ feeds: TrendingFeedProps[] }> = (props) => {
     const { data: session } = useSession()
     return (
-        <div className='bg-trending bg-fixed bg-repeat bg-contain'>
+        <div className='bg-trending bg-fixed bg-repeat bg-contain h-screen'>
             <Head>
                 <title>Liveed – Trending</title>
             </Head>
@@ -64,7 +64,7 @@ const TrendingPage: NextPage<{ feeds: TrendingFeedProps[] }> = (props) => {
                 { title: 'Watchlist', url: '/watchlist', active: false }
             ]} title='Home' />
 
-            <div className='flex flex-col items-center mt-24 space-y-4'>
+            <div className='flex flex-col items-center pt-24 space-y-4'>
                 <div className='text-red-500 p-6 text-center'>
                     <h1 className='font-extrabold text-4xl'>Welcome to the Trending page</h1>
                     <p className='text-gray-500 mt-2'>Here are the top feeds for today</p>
