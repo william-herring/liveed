@@ -26,7 +26,7 @@ export const getStaticProps: GetStaticProps = async () => {
         ],
         where: { live: true, createdAt: {
                 lte: new Date(),
-                gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000)
+                gte: new Date(Date.now() - 24 * 60 * 60 * 1000)
             } },
         include: {
             author: {
@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async () => {
 const TrendingPage: NextPage<{ feeds: TrendingFeedProps[] }> = (props) => {
     const { data: session } = useSession()
     return (
-        <div>
+        <div className='bg-trending bg-fixed bg-repeat bg-contain'>
             <Head>
                 <title>Liveed – Trending</title>
             </Head>
@@ -64,11 +64,11 @@ const TrendingPage: NextPage<{ feeds: TrendingFeedProps[] }> = (props) => {
                 { title: 'Watchlist', url: '/watchlist', active: false }
             ]} title='Home' />
 
-            <div className='flex flex-col items-center w-screen'>
-                <h1>Trending</h1>
-            </div>
-
             <div className='flex flex-col items-center mt-24 space-y-4'>
+                <div className='text-red-500 p-6 text-center'>
+                    <h1 className='font-extrabold text-4xl'>Welcome to the Trending page</h1>
+                    <p className='text-gray-500 mt-2'>Here are the top feeds for today</p>
+                </div>
                 {props.feeds.map((obj) => {
                     return <FeedCard key={obj.id} id={obj.id} title={obj.title} posts={obj.posts.length} subscriptions={obj.subscribers.length}
                                      author={obj.author.username} live={obj.live} />
