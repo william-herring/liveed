@@ -53,7 +53,7 @@ export const getStaticProps: GetStaticProps = async () => {
 const TrendingPage: NextPage<{ feeds: TrendingFeedProps[] }> = (props) => {
     const { data: session } = useSession()
     return (
-        <div className='bg-trending bg-fixed bg-repeat bg-contain h-screen'>
+        <div className='bg-trending bg-fixed bg-repeat bg-contain'>
             <Head>
                 <title>Liveed – Trending</title>
             </Head>
