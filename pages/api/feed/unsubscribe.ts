@@ -18,20 +18,22 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
         }
     })
 
+    // @ts-ignore
+    let subscribers = feed.subscribers.filter(u => u.email !== session?.user?.email)
+
     const result = await prisma.feed.update({
         where: {
             id: id.toString()
         },
         data: {
             subscribers: {
-                // @ts-ignore
-                connect: { email: session?.user?.email }
+                set: subscribers
             }
         }
     })
 
     res.status(200)
     res.json({
-        'Subscribed to feed': id
+        'Unsubscribed from feed': id
     })
 }
