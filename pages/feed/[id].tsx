@@ -105,7 +105,7 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                     </p>)}
                 </div>
                 <p className='text-sm mr-auto space-x-5'><button className='text-gray-500' onClick={() => setOpenPopup(true)}>{props.feed.subscribers.length} subscribers</button>
-                    {session?.user?.name != undefined && !props.feed.subscribers.some(u => u.username === session?.user?.name)? <button className='text-red-500 font-semibold' onClick={subscribeToFeed}>Subscribe</button> : <button className='text-gray-500 font-semibold' onClick={unsubscribeFromFeed}>Unsubscribe</button>} </p>
+                    {session?.user?.name == undefined? null : !props.feed.subscribers.some(u => u.username === session?.user?.name)? <button className='text-red-500 font-semibold' onClick={subscribeToFeed}>Subscribe</button> : <button className='text-gray-500 font-semibold' onClick={unsubscribeFromFeed}>Unsubscribe</button>} </p>
                 <p className='text-gray-500 text-sm'>{props.feed.posts.length} posts</p>
             </div>
 
