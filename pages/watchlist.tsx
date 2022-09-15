@@ -19,7 +19,7 @@ interface HomeFeedProps extends Feed {
     }[]
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     const session = await getSession()
     console.log(session?.user?.name)
     const user = await prisma.user.findUnique({
