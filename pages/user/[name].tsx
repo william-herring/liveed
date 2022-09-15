@@ -77,7 +77,7 @@ const Account: NextPage<{ user: UserPageProps }> = (props) => {
                     </div>
 
                     <div className='flex flex-col items-center ml-6 space-y-4 mt-4'>
-                        {props.user.feeds.map((feed) => <FeedCard id={feed.id} title={feed.title} posts={feed.posts.length} author={props.user.username} live={feed.live} subscriptions={feed.subscribers.length} />)}
+                        {props.user.feeds.map((feed) => <FeedCard key={feed.id} id={feed.id} title={feed.title} posts={feed.posts.length} author={props.user.username} live={feed.live} subscriptions={feed.subscribers.length} />)}
                     </div>
 
                 </div>
