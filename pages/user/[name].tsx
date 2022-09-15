@@ -69,10 +69,10 @@ const Account: NextPage<{ user: UserPageProps }> = (props) => {
                     <div className='flex pl-3 border-b-2 space-x-3 text-gray-500'>
                         {['Feeds', 'Posts', 'Watchlist'].map((value, i) => {
                             if (i != tab) {
-                                return <button className='border-2 border-b-0 rounded-t-lg p-2' onClick={() => setTab(i)}>{value}</button>
+                                return <button key={i} className='border-2 border-b-0 rounded-t-lg p-2' onClick={() => setTab(i)}>{value}</button>
                             }
 
-                            return <button className='border-2 border-b-0 rounded-t-lg p-2 bg-gray-200' onClick={() => setTab(i)}>{value}</button>
+                            return <button key={i} className='border-2 border-b-0 rounded-t-lg p-2 bg-gray-200' onClick={() => setTab(i)}>{value}</button>
                         })}
                     </div>
 

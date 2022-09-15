@@ -28,7 +28,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               </svg>
             </button>
 
-            {props.links.map((obj) => <a href={obj.url} className={obj.active? 'text-red-500 ml-6 font-bold text-2xl' : 'ml-6 text-2xl'}>{obj.title}</a>)}
+            {props.links.map((obj) => <a key={obj.title} href={obj.url} className={obj.active? 'text-red-500 ml-6 font-bold text-2xl' : 'ml-6 text-2xl'}>{obj.title}</a>)}
 
             {session? <a href={`/user/${session?.user?.name}`} className='flex p-6 fixed bottom-0 space-x-3 items-center w-full border-t-2'>
               <img className='rounded-full' src={`https://ui-avatars.com/api/?name=${session?.user?.name}&background=00437d&color=fff`} width={52} />
@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               </a>
 
               {props.links.map((obj) => {
-                  return <a href={obj.url} className={obj.active? 'text-red-500 ml-6' : 'font-light ml-6'}>{obj.title}</a>
+                  return <a key={obj.title} href={obj.url} className={obj.active? 'text-red-500 ml-6' : 'font-light ml-6'}>{obj.title}</a>
               })}
 
               <input type="text" placeholder='Search...' className='p-2 ml-6 ring-2 ring-gray-200 rounded-xl hover:ring-4' onKeyDown={handleSearchQuery} />

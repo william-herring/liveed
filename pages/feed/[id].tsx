@@ -75,7 +75,7 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                         <button>Close</button>
                     </div>
                     <h1 className='font-semibold text-xl'>Subscribers to this feed ({props.feed.subscribers.length})</h1>
-                    {props.feed.subscribers.map((s) => <a className='flex my-4 items-center' href={`/user/${s.username}`}>
+                    {props.feed.subscribers.map((s) => <a key={s.username} className='flex my-4 items-center' href={`/user/${s.username}`}>
                         <img src={`https://ui-avatars.com/api/?name=${s.username}&background=00437d&color=fff`} className='rounded-full' width={32} />
                         <p className='text-sm text-gray-500 ml-2'>{s.username}</p>
                     </a>)}
@@ -101,7 +101,7 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
                     {props.feed.live? <p className='bg-red-500 text-white px-2 rounded-r-full rounded-l-full ml-auto'>LIVE</p> : null}
                 </div>
                 <div className='flex flex-wrap space-x-2 my-1.5 w-full'>
-                    {props.feed.tags.map((t) => <p className='bg-blue-300 text-blue-900 text-xs rounded-full p-1.5 text-center mb-1.5' key={t}>#{t}
+                    {props.feed.tags.map((t) => <p key={t} className='bg-blue-300 text-blue-900 text-xs rounded-full p-1.5 text-center mb-1.5' >#{t}
                     </p>)}
                 </div>
                 <p className='text-sm mr-auto space-x-5'><button className='text-gray-500' onClick={() => setOpenPopup(true)}>{props.feed.subscribers.length} subscribers</button>
@@ -111,9 +111,9 @@ const FeedPage: NextPage<{ feed: FeedProps }> = (props) => {
 
             <div className='flex flex-col items-center mb-6'>
                 <div className='w-5/6 md:w-1/2 space-y-6 bg'>
-                    {[...Array(editingPosts)].map(() => <TextEditor feedId={props.feed.id} onDelete={() => setEditingPosts(editingPosts - 1)} />)}
+                    {[...Array(editingPosts)].map((i) => <TextEditor key={i} feedId={props.feed.id} onDelete={() => setEditingPosts(editingPosts - 1)} />)}
 
-                    {props.feed.posts.reverse().map((obj) => <Post title={obj.title} content={obj.content} />)}
+                    {props.feed.posts.reverse().map((obj) => <Post key={obj.title} title={obj.title} content={obj.content} />)}
                 </div>
             </div>
 
